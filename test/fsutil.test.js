@@ -163,7 +163,7 @@ suite('fsutil.ln_sf', function() {
         done();
     });
 
-    test('', function(done) {
+    test('Creates a symbolic link on the given path even if a file exists on the path.', function(done) {
         fs.writeFileSync('a', 'hello');
         fs.writeFileSync('b', 'bye');
         fsutil.ln_sf('a', 'b');
