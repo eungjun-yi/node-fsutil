@@ -181,8 +181,11 @@ suite('fsutil.ln_sf', function() {
 });
 
 suite('fsutil.cd', function() {
+    var origin;
+
     setup(function(done) {
         fsutil.rm_rf('a');
+        origin = process.cwd();
         done();
     });
 
@@ -195,6 +198,7 @@ suite('fsutil.cd', function() {
     });
 
     teardown(function(done) {
+        process.chdir(origin);
         fsutil.rm_rf('a');
         done();
     });
