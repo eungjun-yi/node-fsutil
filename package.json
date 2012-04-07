@@ -13,12 +13,12 @@
     "file",
     "filesystem",
     "fileutil",
-    "utility",
+    "utility"
   ],
   "dependencies" : {
   },
   "devDependencies": {
-    "mocha"      : "1.0.x",
+    "mocha"      : "1.0.x"
   },
   "noAnalyze": true,
   "contributors": [ 
@@ -33,6 +33,6 @@
     "node": ">=0.6"
   },
   "scripts": {
-    "test"  : "mocha -u tdd -R spec",
+    "test" : "mocha -u tdd -R spec"
   }
 }
