@@ -125,7 +125,3 @@ exports.rm = fs.unlinkSync;
 exports.chmod = function(mode, path) { return fs.chmodSync(path, mode); };
 exports.chown = function(uid, gid, path) { return fs.chownSync(path, uid, gid); };
 exports.chown_R = chown_R;
-//   install(src, dest, mode = <src's>, options)
-//   chown(uid, gid, list, options)
-//   chown_R(uid, gid, list, options)
-//   touch(list, options)
