@@ -33,6 +33,6 @@
     "node": ">=0.6"
   },
   "scripts": {
-    "test" : "mocha -u tdd -R spec"
+    "test" : "sudo mocha -u tdd -R spec"
   }
 }
