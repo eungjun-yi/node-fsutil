@@ -51,13 +51,48 @@ var fwrite_p = function(path, data) {
     return fs.writeFileSync(path, data);
 }
 
-var cp = function(src, dst, callback) {
+var cp_async = function(src, dst, callback) {
     var is = fs.createReadStream(src);
     var os = fs.createWriteStream(dst);
     util.pump(is, os, callback);
 }
 
-var cp_r = function(src, dst, callback) {
+var cp = function(src, dst) {
+    var block_size = 4096;
+    var buf = new Buffer(block_size);
+    var fd_src = fs.openSync(src, 'r');
+    var fd_dst = fs.openSync(dst, 'w');
+    var offset = 0;
+    var remain = fs.statSync(src).size;
+    var read_size = 0;
+
+    while (remain) {
+        read_size = remain < block_size ? remain : block_size;
+        fs.readSync(fd_src, buf, offset, read_size);
+        fs.writeSync(fd_dst, buf, offset, read_size);
+        remain -= read_size;
+        offset += read_size;
+    }
+
+    fs.closeSync(fd_src);
+    fs.closeSync(fd_dst);
+}
+
+var cp_r = function(src, dst) {
+    var self = this;
+
+    if (fs.statSync(src).isDirectory()) {
+        fs.mkdirSync(dst);
+        var files = fs.readdirSync(src);
+        files.forEach(function (filename) {
+            self.cp_r(pth.join(src, filename), pth.join(dst, filename));
+        });
+    } else {
+        cp(src, dst);
+    }
+}
+
+var cp_r_async = function(src, dst, callback) {
     var self = this;
 
     if (fs.statSync(src).isDirectory()) {
@@ -75,10 +110,10 @@ var cp_r = function(src, dst, callback) {
             }
         }
         files.forEach(function (filename) {
-            self.cp_r(pth.join(src, filename), pth.join(dst, filename), cb);
+            self.cp_r_async(pth.join(src, filename), pth.join(dst, filename), cb);
         });
     } else {
-        cp(src, dst, callback);
+        cp_async(src, dst, callback);
     }
 }
 
@@ -115,7 +150,9 @@ exports.rm_rf = rm_rf;
 exports.mkdir_p = mkdir_p;
 exports.fwrite_p = fwrite_p;
 exports.cp = cp;
+exports.cp_async = cp_async;
 exports.cp_r = cp_r;
+exports.cp_r_async = cp_r_async;
 exports.ln_s = fs.symlinkSync;
 exports.ln_sf = ln_sf;
 exports.cd = process.chdir;
