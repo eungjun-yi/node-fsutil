@@ -1,9 +1,7 @@
 Filesystem Utilities
 ====================
 
-Filesystem utilities for Node.js.
-
-These are all synchronous functions except cp and cp_r.
+*Synchronous* Filesystem utilities for Node.js.
 
 Requirements
 ------------
@@ -21,11 +19,11 @@ Remove the directory on `path` recursively.
 
 Create a directory and all its parent directories.
 
-#### cp(src, dest, callback)
+#### cp(src, dest)
 
 Copy a file content `src` to `dest`.
 
-#### cp_r(src, dest, callback)
+#### cp_r(src, dest)
 
 Copy file contents `src` to `dest` recursively.
 
