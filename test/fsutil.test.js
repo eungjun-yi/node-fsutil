@@ -154,55 +154,6 @@ suite('fsutil.cp_r', function() {
     });
 });
 
-
-suite('fsutil.cp_async', function() {
-    setup(function(done) {
-        fsutil.rm_rf('a');
-        fsutil.rm_rf('b');
-        done();
-    });
-
-    test('Copy a file content src to dest.', function(done) {
-        fs.writeFileSync('a', 'hello');
-        fsutil.cp_async('a', 'b', function() {
-            assert.equal(fs.readFileSync('b'), 'hello');
-            done();
-        });
-    });
-
-    teardown(function(done) {
-        fsutil.rm_rf('a');
-        fsutil.rm_rf('b');
-        done();
-    });
-});
-
-suite('fsutil.cp_r_async', function() {
-    setup(function(done) {
-        fsutil.rm_rf('a');
-        fsutil.rm_rf('b');
-        done();
-    });
-
-    test('Copy src to dest recursively.', function(done) {
-        fs.mkdirSync('a');
-        fs.mkdirSync('a/b');
-        fs.mkdirSync('a/c');
-        fs.writeFileSync('a/d', 'hello');
-
-        fsutil.cp_r_async('a', 'b', function() {
-            assert.equal(fs.readFileSync('b/d'), 'hello');
-            done();
-        });
-    });
-
-    teardown(function(done) {
-        fsutil.rm_rf('a');
-        fsutil.rm_rf('b');
-        done();
-    });
-});
-
 suite('fsutil.ln_sf', function() {
     setup(function(done) {
         fsutil.rm_rf('a');

@@ -51,12 +51,6 @@ var fwrite_p = function(path, data) {
     return fs.writeFileSync(path, data);
 }
 
-var cp_async = function(src, dst, callback) {
-    var is = fs.createReadStream(src);
-    var os = fs.createWriteStream(dst);
-    util.pump(is, os, callback);
-}
-
 var cp = function(src, dst) {
     var block_size = 4096;
     var buf = new Buffer(block_size);
@@ -89,31 +83,6 @@ var cp_r = function(src, dst) {
         });
     } else {
         cp(src, dst);
-    }
-}
-
-var cp_r_async = function(src, dst, callback) {
-    var self = this;
-
-    if (fs.statSync(src).isDirectory()) {
-        fs.mkdirSync(dst);
-        var files = fs.readdirSync(src);
-        var num_of_files = files.length;
-        if (num_of_files == 0) {
-            callback(null);
-        }
-        var cnt = 0;
-        var cb = function(err) {
-            if (err) throw err;
-            if (++cnt >= num_of_files) {
-                callback(err);
-            }
-        }
-        files.forEach(function (filename) {
-            self.cp_r_async(pth.join(src, filename), pth.join(dst, filename), cb);
-        });
-    } else {
-        cp_async(src, dst, callback);
     }
 }
 
@@ -150,9 +119,7 @@ exports.rm_rf = rm_rf;
 exports.mkdir_p = mkdir_p;
 exports.fwrite_p = fwrite_p;
 exports.cp = cp;
-exports.cp_async = cp_async;
 exports.cp_r = cp_r;
-exports.cp_r_async = cp_r_async;
 exports.ln_s = fs.symlinkSync;
 exports.ln_sf = ln_sf;
 exports.cd = process.chdir;
