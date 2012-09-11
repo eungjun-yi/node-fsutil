@@ -5,19 +5,19 @@ var path = require('path');
 
 suite('fsutil.rm_rf', function() {
     setup(function(done) {
-        if (path.existsSync('a')) {
+        if (fs.existsSync('a')) {
             fs.rmdirSync('a');
         }
-        if (path.existsSync('a/b')) {
+        if (fs.existsSync('a/b')) {
             fs.unlinkSync('a/b');
         }
-        if (path.existsSync('b')) {
+        if (fs.existsSync('b')) {
             fs.rmdirSync('b');
         }
-        if (path.existsSync('c')) {
+        if (fs.existsSync('c')) {
             fs.unlinkSync('c');
         }
-        if (path.existsSync('d')) {
+        if (fs.existsSync('d')) {
             fs.unlinkSync('d');
         }
         done();
@@ -27,8 +27,8 @@ suite('fsutil.rm_rf', function() {
         fs.mkdirSync('a');
         fs.writeFileSync('a/b', 'hello');
         fsutil.rm_rf('a');
-        assert.ok(!path.existsSync('a'));
-        assert.ok(!path.existsSync('a/b'));
+        assert.ok(!fs.existsSync('a'));
+        assert.ok(!fs.existsSync('a/b'));
     });
 
     test('Remove a dead symbolic link.', function() {
@@ -40,19 +40,19 @@ suite('fsutil.rm_rf', function() {
     });
 
     teardown(function(done) {
-        if (path.existsSync('a')) {
+        if (fs.existsSync('a')) {
             fs.rmdirSync('a');
         }
-        if (path.existsSync('a/b')) {
+        if (fs.existsSync('a/b')) {
             fs.unlinkSync('a/b');
         }
-        if (path.existsSync('b')) {
+        if (fs.existsSync('b')) {
             fs.rmdirSync('b');
         }
-        if (path.existsSync('c')) {
+        if (fs.existsSync('c')) {
             fs.unlinkSync('c');
         }
-        if (path.existsSync('d')) {
+        if (fs.existsSync('d')) {
             fs.unlinkSync('d');
         }
         done();
@@ -61,7 +61,7 @@ suite('fsutil.rm_rf', function() {
 
 suite('fsutil.mkdir_p', function() {
     setup(function(done) {
-        if (path.existsSync('a/b')) {
+        if (fs.existsSync('a/b')) {
             fs.rmdirSync('a/b');
             fs.rmdirSync('a');
         }
@@ -70,13 +70,13 @@ suite('fsutil.mkdir_p', function() {
 
     test('Create a directory and all its parent directories.', function(done) {
         fsutil.mkdir_p('a/b');
-        assert.ok(path.existsSync('a'));
-        assert.ok(path.existsSync('a/b'));
+        assert.ok(fs.existsSync('a'));
+        assert.ok(fs.existsSync('a/b'));
         done();
     });
 
     teardown(function(done) {
-        if (path.existsSync('a/b')) {
+        if (fs.existsSync('a/b')) {
             fs.rmdirSync('a/b');
             fs.rmdirSync('a');
         }
@@ -86,7 +86,7 @@ suite('fsutil.mkdir_p', function() {
 
 suite('fsutil.fwrite_p', function() {
     setup(function(done) {
-        if (path.existsSync('a/b')) {
+        if (fs.existsSync('a/b')) {
             fs.unlinkSync('a/b');
             fs.rmdirSync('a');
         }
@@ -100,7 +100,7 @@ suite('fsutil.fwrite_p', function() {
     });
 
     teardown(function(done) {
-        if (path.existsSync('a/b')) {
+        if (fs.existsSync('a/b')) {
             fs.unlinkSync('a/b');
             fs.rmdirSync('a');
         }

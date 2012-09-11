@@ -26,7 +26,7 @@ var _mkdir_p = function(path_segments) {
     var paths_to_create = [];
     if (!path_segments.every(function (segment) {
         base = pth.join(base, segment);
-        if (!pth.existsSync(base)) {
+        if (!fs.existsSync(base)) {
             paths_to_create.push(base);
             return true;
         }
@@ -87,7 +87,7 @@ var cp_r = function(src, dst) {
 }
 
 var ln_sf = function(src, path) {
-    if (pth.existsSync(path)) {
+    if (fs.existsSync(path)) {
         if (fs.statSync(path).isDirectory()) {
             var segments = src.split(pth.sep);
             filename = segments.split(pth.sep)[segments.length - 1]
