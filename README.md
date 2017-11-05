@@ -6,7 +6,7 @@ Filesystem Utilities
 Requirements
 ------------
 
-* [mocha](http://visionmedia.github.com/mocha/) (if you want to run tests)
+* [mocha](http://mochajs.org/) (if you want to run tests)
 
 API
 ---
